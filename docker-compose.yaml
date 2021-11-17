@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+    cassandra-reaper:
+        ports:
+            - '18080:8080'
+            - '18081:8081'
+        environment:
+            - REAPER_JMX_AUTH_USERNAME=${REAPER_JMX_AUTH_USERNAME}
+            - REAPER_JMX_AUTH_PASSWORD=${REAPER_JMX_AUTH_PASSWORD}
+            - REAPER_INCREMENTAL_REPAIR=${REAPER_INCREMENTAL_REPAIR}
+            - REAPER_STORAGE_TYPE=${REAPER_STORAGE_TYPE}
+            - REAPER_CASS_CLUSTER_NAME=${REAPER_CASS_CLUSTER_NAME}
+            - REAPER_CASS_CONTACT_POINTS=${REAPER_CASS_CONTACT_POINTS}
+            - REAPER_CASS_KEYSPACE=${REAPER_CASS_KEYSPACE}
+            - REAPER_LOGGING_ROOT_LEVEL=${REAPER_LOGGING_ROOT_LEVEL}
+            - CRYPTO_SYSTEM_PROPERTY_SECRET=${CRYPTO_SYSTEM_PROPERTY_SECRET}
+            - CRYPTO_SECRET=${CRYPTO_SECRET}
+        volumes:
+            - ./data/reaper:/var/log/cassandra-reaper
+        container_name: reaper
+        restart: unless-stopped
+        image: 'thelastpickle/cassandra-reaper:latest'
