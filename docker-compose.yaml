@@ -5,16 +5,26 @@ services:
             - '18080:8080'
             - '18081:8081'
         environment:
+            # JMX default username/password
             - REAPER_JMX_AUTH_USERNAME=${REAPER_JMX_AUTH_USERNAME}
             - REAPER_JMX_AUTH_PASSWORD=${REAPER_JMX_AUTH_PASSWORD}
+            # Default for this = false, for 3.x and lower, true is a better option
             - REAPER_INCREMENTAL_REPAIR=${REAPER_INCREMENTAL_REPAIR}
+            # Define the storage type: Need a 'reaper_db' keyspace creating in
+            # target Cassandra cluster if using 'cassandra' storage.
             - REAPER_STORAGE_TYPE=${REAPER_STORAGE_TYPE}
             - REAPER_CASS_CLUSTER_NAME=${REAPER_CASS_CLUSTER_NAME}
             - REAPER_CASS_CONTACT_POINTS=${REAPER_CASS_CONTACT_POINTS}
             - REAPER_CASS_KEYSPACE=${REAPER_CASS_KEYSPACE}
+            # Logging definitions
             - REAPER_LOGGING_ROOT_LEVEL=${REAPER_LOGGING_ROOT_LEVEL}
+            # Specify a secret in order to store JMX credentials for clusters
             - CRYPTO_SYSTEM_PROPERTY_SECRET=${CRYPTO_SYSTEM_PROPERTY_SECRET}
             - CRYPTO_SECRET=${CRYPTO_SECRET}
+            # Specify your own UI credentials (default: admin/admin)
+            - REAPER_AUTH_ENABLED=${REAPER_AUTH_ENABLED}
+            - REAPER_AUTH_USER=${REAPER_AUTH_USER}
+            - REAPER_AUTH_PASSWORD=${REAPER_AUTH_PASSWORD}
         volumes:
             - ./data/reaper:/var/log/cassandra-reaper
         container_name: reaper
